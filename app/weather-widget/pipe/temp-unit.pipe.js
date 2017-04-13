@@ -7,17 +7,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var AppComponent = (function () {
-    function AppComponent() {
+var TempUnitPipe = (function () {
+    function TempUnitPipe() {
     }
-    return AppComponent;
+    TempUnitPipe.prototype.transform = function (temp, unitType) {
+        if (unitType == "celsius") {
+            var celsius = (temp - 32) * 0.5556;
+            return celsius;
+        }
+        else {
+            return temp;
+        }
+    };
+    return TempUnitPipe;
 }());
-AppComponent = __decorate([
-    core_1.Component({
-        selector: 'my-app',
-        template: "\n        <div class=\"container\">\n            <div class=\"col-xs-8 offset-xs-2\">\n                <weather-widget></weather-widget>\n            </div>\n        </div>\n    ",
-        styles: ["\n        .container { padding-top: 2rem; }\n    "]
+TempUnitPipe = __decorate([
+    core_1.Pipe({
+        name: 'tempUnit'
     })
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+], TempUnitPipe);
+exports.TempUnitPipe = TempUnitPipe;
+//# sourceMappingURL=temp-unit.pipe.js.map

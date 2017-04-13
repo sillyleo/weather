@@ -10,7 +10,7 @@ import { Component } from "@angular/core";
         </div>
     `,
     styles: [`
-        .container { padding-top: 5rem; }
+        .container { padding-top: 2rem; }
     `]
 })
 

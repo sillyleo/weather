@@ -11,17 +11,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var weather_service_1 = require("../service/weather.service");
+var weather_1 = require("../model/weather");
 var WeatherComponent = (function () {
     function WeatherComponent(service) {
-        var _this = this;
         this.service = service;
+        this.weatherData = new weather_1.Weather(null, null, null, null, null);
+        this.currentSpeedUnit = "kph";
+        this.currentTempUnit = "celsius";
+        this.currentLocation = "";
+    }
+    WeatherComponent.prototype.ngOnInit = function () {
+        this.getCurrentLocation();
+    };
+    WeatherComponent.prototype.getCurrentLocation = function () {
+        var _this = this;
         this.service.getCurrentLocation()
             .subscribe(function (position) {
             _this.pos = position;
-            _this.service.getCurrentWeather(_this.pos.coords.latitude, _this.pos.coords.longitude)
-                .subscribe(function (weather) { return console.log(weather); }, function (err) { return console.error(err); });
+            _this.getCurrentWeather();
+            _this.getLocationName();
         }, function (err) { return console.error(err); });
-    }
+    };
+    WeatherComponent.prototype.getCurrentWeather = function () {
+        var _this = this;
+        this.service.getCurrentWeather(this.pos.coords.latitude, this.pos.coords.longitude)
+            .subscribe(function (weather) {
+            _this.weatherData.temp = weather["currently"]["temperature"],
+                _this.weatherData.summary = weather["currently"]["summary"],
+                _this.weatherData.wind = weather["currently"]["windSpeed"],
+                _this.weatherData.humidity = weather["currently"]["humidity"],
+                _this.weatherData.icon = weather["currently"]["icon"],
+                console.log("Weather: ", _this.weatherData); // TODO
+        }, function (err) { return console.error(err); });
+    };
+    WeatherComponent.prototype.getLocationName = function () {
+        var _this = this;
+        this.service.getLocationName(this.pos.coords.latitude, this.pos.coords.longitude)
+            .subscribe(function (location) {
+            console.log(location);
+            _this.currentLocation = location["results"][6]["formatted_address"];
+            console.log(_this.currentLocation);
+        });
+    };
     return WeatherComponent;
 }());
 WeatherComponent = __decorate([
