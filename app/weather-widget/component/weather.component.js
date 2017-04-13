@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var weather_service_1 = require("../service/weather.service");
 var weather_1 = require("../model/weather");
+var constants_1 = require("../constants/constants");
 var WeatherComponent = (function () {
     function WeatherComponent(service) {
         this.service = service;
@@ -19,6 +20,8 @@ var WeatherComponent = (function () {
         this.currentSpeedUnit = "kph";
         this.currentTempUnit = "celsius";
         this.currentLocation = "";
+        this.icons = new Skycons();
+        this.dataReceived = false;
     }
     WeatherComponent.prototype.ngOnInit = function () {
         this.getCurrentLocation();
@@ -42,6 +45,8 @@ var WeatherComponent = (function () {
                 _this.weatherData.humidity = weather["currently"]["humidity"],
                 _this.weatherData.icon = weather["currently"]["icon"],
                 console.log("Weather: ", _this.weatherData); // TODO
+            _this.setIcon();
+            _this.dataReceived = true;
         }, function (err) { return console.error(err); });
     };
     WeatherComponent.prototype.getLocationName = function () {
@@ -52,6 +57,41 @@ var WeatherComponent = (function () {
             _this.currentLocation = location["results"][6]["formatted_address"];
             console.log(_this.currentLocation);
         });
+    };
+    WeatherComponent.prototype.toggleUnit = function () {
+        this.toggleTempUnit();
+        this.toggleSpeedUnits();
+        console.log('switched');
+    };
+    WeatherComponent.prototype.toggleTempUnit = function () {
+        if (this.currentTempUnit == "celsius") {
+            this.currentTempUnit = "fahrenheit";
+        }
+        else {
+            this.currentTempUnit = "celsius";
+        }
+    };
+    WeatherComponent.prototype.toggleSpeedUnits = function () {
+        if (this.currentSpeedUnit == "mph") {
+            this.currentSpeedUnit = "kph";
+        }
+        else {
+            this.currentSpeedUnit = "mph";
+        }
+    };
+    WeatherComponent.prototype.setIcon = function () {
+        this.icons.add("icon", this.weatherData.icon);
+        this.icons.play();
+    };
+    WeatherComponent.prototype.setStyles = function () {
+        if (this.weatherData.icon) {
+            this.icons.color = constants_1.WEATHER_COLORS[this.weatherData.icon]["color"];
+            return constants_1.WEATHER_COLORS[this.weatherData.icon];
+        }
+        else {
+            this.icons.color = constants_1.WEATHER_COLORS["default"]["color"];
+            return constants_1.WEATHER_COLORS["default"];
+        }
     };
     return WeatherComponent;
 }());

@@ -1,6 +1,26 @@
 .card {
     box-shadow: 0px 2px 4px rgba(0,0,0,0.24);
     border-radius: 15px;
+    user-select: none;
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: 1.8s;
+    transform: scale(1);
+    height: auto;
+}
+
+.location {
+    height: 40px;
+}
+
+.card:active {
+    transition-property: all;
+    transform: scale(0.98);
+}
+
+#icon {
+    max-width: 100%;
+    margin: 0 auto 1rem auto;
 }
 
 .card,
@@ -8,17 +28,21 @@
 .card-footer {
     border-radius: 12px;
     border: none;
-    background: #00bcd4;
-    color: white;
+}
+
+.title {
+    font-size: 70%;
+    opacity: 0.7;
 }
 
 .card-header,
 .card-footer {
     padding: 1rem .5rem;
+    background: transparent;
 }
 
 .card-block {
-    padding: 3rem;
+    padding: 2rem;
 }
 
 .card-block,
