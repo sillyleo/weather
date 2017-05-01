@@ -1,4 +1,4 @@
-<div class="card" (click)="toggleUnit()" [ngStyle]="setStyles()">
+<div class="card" (click)="toggleUnit()" [ngStyle]="setStyles()" [class.expanded]="dataReceived">
     <div class="card-header" [class.invisible]="!dataReceived">
         <div class="col-xs-8">
             <p class="location">{{ currentLocation }}</p>
@@ -15,7 +15,7 @@
         </div>
 
         <canvas id="icon" [hidden]="!dataReceived"></canvas>
-        <p>{{ weatherData.summary }}</p>
+        <p [hidden]="!dataReceived">{{ weatherData.summary }}</p>
     </div>
     <div class="card-footer" [class.invisible]="!dataReceived">
         <div class="col-xs-5">
@@ -28,3 +28,4 @@
         </div>
     </div>
 </div>
+<div class="refresh" (click)="refreshCurrentWeather()">Refresh | <span>{{ displayDate | date: 'shortTime' }}</span></div>

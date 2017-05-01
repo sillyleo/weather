@@ -4,8 +4,12 @@
     user-select: none;
     cursor: pointer;
     transition-property: all;
-    transition-duration: 1.8s;
+    transition-duration: 0.5s;
     transform: scale(1);
+    height: 260px;
+}
+
+.card.expanded {
     height: auto;
 }
 
@@ -26,6 +30,8 @@
 .card,
 .card-header,
 .card-footer {
+    transition-property: all;
+    transition-duration: 1.8s;
     border-radius: 12px;
     border: none;
 }
@@ -42,6 +48,8 @@
 }
 
 .card-block {
+    transition-property: all;
+    transition-duration: 1.8s;
     padding: 2rem;
 }
 

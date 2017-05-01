@@ -6,7 +6,7 @@ import { Weather } from '../model/weather';
 
 import { WEATHER_COLORS } from '../constants/constants';
 
-declare var Skycons :any;
+declare var Skycons: any;
 
 @Component({
 
@@ -53,8 +53,8 @@ export class WeatherComponent implements OnInit {
                     this.weatherData.humidity = weather["currently"]["humidity"],
                     this.weatherData.icon = weather["currently"]["icon"],
                     console.log("Weather: ", this.weatherData); // TODO
-                    this.setIcon();
-                    this.dataReceived = true;
+                this.setIcon();
+                this.dataReceived = true;
             },
             err => console.error(err));
 
@@ -78,7 +78,7 @@ export class WeatherComponent implements OnInit {
     }
 
     toggleTempUnit() {
-        if(this.currentTempUnit == "celsius") {
+        if (this.currentTempUnit == "celsius") {
             this.currentTempUnit = "fahrenheit";
         } else {
             this.currentTempUnit = "celsius";
@@ -86,7 +86,7 @@ export class WeatherComponent implements OnInit {
     }
 
     toggleSpeedUnits() {
-        if(this.currentSpeedUnit == "mph") {
+        if (this.currentSpeedUnit == "mph") {
             this.currentSpeedUnit = "kph";
         } else {
             this.currentSpeedUnit = "mph";
@@ -94,18 +94,28 @@ export class WeatherComponent implements OnInit {
     }
 
     setIcon() {
-        this.icons.add("icon",this.weatherData.icon);
+        this.icons.add("icon", this.weatherData.icon);
         this.icons.play();
     }
 
     setStyles(): Object {
-        if(this.weatherData.icon) {
+        if (this.weatherData.icon) {
             this.icons.color = WEATHER_COLORS[this.weatherData.icon]["color"];
             return WEATHER_COLORS[this.weatherData.icon];
         } else {
             this.icons.color = WEATHER_COLORS["default"]["color"];
             return WEATHER_COLORS["default"];
         }
+    }
+
+    displayDate = new Date();
+
+
+    refreshCurrentWeather() {
+        this.weatherData = new Weather(null, null, null, null, null);
+        this.getCurrentWeather();
+        this.displayDate = new Date();
+
     }
 
 

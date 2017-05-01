@@ -22,6 +22,7 @@ var WeatherComponent = (function () {
         this.currentLocation = "";
         this.icons = new Skycons();
         this.dataReceived = false;
+        this.displayDate = new Date();
     }
     WeatherComponent.prototype.ngOnInit = function () {
         this.getCurrentLocation();
@@ -92,6 +93,11 @@ var WeatherComponent = (function () {
             this.icons.color = constants_1.WEATHER_COLORS["default"]["color"];
             return constants_1.WEATHER_COLORS["default"];
         }
+    };
+    WeatherComponent.prototype.refreshCurrentWeather = function () {
+        this.weatherData = new weather_1.Weather(null, null, null, null, null);
+        this.getCurrentWeather();
+        this.displayDate = new Date();
     };
     return WeatherComponent;
 }());
